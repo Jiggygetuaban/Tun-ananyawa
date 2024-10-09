@@ -4,10 +4,12 @@ import java.util.Scanner;
 
 
 public class IT2EGetuaban {
-    
+    config conf = new config();
+    Scanner sc = new Scanner(System.in);
     public void addSample(){
-        Scanner sc = new Scanner(System.in);
-        config conf = new config();
+        
+       
+        
         
         System.out.print(" First Name: ");
         String fname = sc.next();
@@ -26,11 +28,11 @@ public class IT2EGetuaban {
 
         String sql = "INSERT INTO tbl_employee (e_fname, e_lname, e_email, e_position, e_status) VALUES (?, ?, ?, ?, ?)";
         conf.addRecord(sql, fname, lname, email, position, status);
-
-
+        
+        
+        
     }
-     
-     
+        
      private void viewSample() {
         String votersQuery = "SELECT * FROM tbl_employee";
         String[] votersHeaders = {"ID", "FName", "LName", "Email", "Position", "Status"};
@@ -43,7 +45,8 @@ public class IT2EGetuaban {
     public static void main(String[] args) {
         
         Scanner sc = new Scanner (System.in);
-        
+        String resp;
+    do{   
         System.out.println("1.  ADD");
         System.out.println("2.  VIEW");
         System.out.println("3.  UPDATE");
@@ -61,11 +64,58 @@ public class IT2EGetuaban {
             case 2:
                 test.viewSample();
             break;
-            
+            case 3:
+                test.viewSample();
+                test.UpdateEmployee();
+            break;
+            case 4:
+                    test.viewSample();
+                    test.deleteEmployee();
+                    test.viewSample();
+                    break;
         }
+        System.out.println("Continue? ");
+        resp = sc.next();
+        
+    }while(resp.equalsIgnoreCase("Yes"));
+        System.out.println("Thank you! ");
+        
         
     }
+    public void UpdateEmployee(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter ID to update: ");
+        int id = sc.nextInt();
+        
+        System.out.println("New First Name: ");
+        String nfame = sc.next();
+        
+        System.out.println("New Last Name: ");
+        String nlname = sc.next();
+        
+        System.out.println("New Email ");
+        String email = sc.next();
+                
+        System.out.println("New Position ");
+        String position = sc.next();
+                
+        System.out.println("New Status: ");
+        String nstat = sc.next();
+        
+        String qry = "UPDATE tbl_employee SET e_fname = ?, e_lname = ?,e_email = ?, e_position =?, e_status = ? WHERE e_id = " + id;
+       
+        conf.updateRecord(qry, nfame, nlname, email, position, nstat);
+    }
+    
+    private void deleteEmployee(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter ID to Delete: ");
+        int id = sc.nextInt();
+     
+        String qry = "DELETE FROM tbl_employee WHERE e_id = ?";
+        config conf = new config();
+        conf.deleteRecord(qry, id);
+}
     
 }
         
-   
